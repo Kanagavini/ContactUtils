@@ -38,6 +38,8 @@ public class PhoneReceiver extends BroadcastReceiver {
             public void onCallStateChanged(int state, String incomingNumber) {
                 super.onCallStateChanged(state, incomingNumber);
 
+
+
                if (checkItem(incomingNumber)) {
                     //start activity which has dialog
                     final Intent intent = new Intent(context, CustomDialog.class);
@@ -61,9 +63,9 @@ public class PhoneReceiver extends BroadcastReceiver {
 
 
         telephony.listen(customPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-
         Bundle bundle = intent.getExtras();
         String phone_number = bundle.getString("incoming_number");
+
         //Toast.makeText(context, "Phone Number " + phone_number, Toast.LENGTH_SHORT).show();
         String stateStr = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
         // String number = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
@@ -88,14 +90,32 @@ public class PhoneReceiver extends BroadcastReceiver {
         List<Contact> contacts = sharedPreference.getContacts(mContext);
         if (contacts != null) {
             for (Contact contact : contacts) {
-                Log.d("dataChec000",contact.getContactNumber() + " "+contact.getContactName());
                 contactName = contact.getContactName();
                 contactUri = contact.getContactUri();
-                String str = phoneNumber.substring(3);
-                if (contact.getContactNumber().equals(str)) {
-                    check = true;
-                    break;
+                String str;
+
+                try{
+                     str = phoneNumber;
+                    if(str.contains("+91")){
+
+                        str = str.replace("+91","").toString();
+                    }else if(str.contains("91")){
+
+                        str = str.replace("91","").toString();
+                    }else {
+
+                        str = str;
+                    }
+
+                    if (contact.getContactNumber().equals(str)) {
+                        check = true;
+                        break;
+                    }
                 }
+                catch (Exception e){
+
+                }
+
             }
         }
         return check;

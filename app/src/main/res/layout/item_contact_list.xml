@@ -36,6 +36,7 @@
                 bind:layout_constraintTop_toTopOf="parent"
                 app:contactUri="@{contact.contactUri}"
                 android:background="@null"
+                android:visibility="gone"
                 tools:src="@drawable/placeholder_image" />
 
             <TextView

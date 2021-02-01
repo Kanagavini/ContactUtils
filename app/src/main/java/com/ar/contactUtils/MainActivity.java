@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.Manifest;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.ar.contactUtils.databinding.ActivityMainBinding;
 import com.ar.contactUtils.model.Contact;
 import com.ar.contactUtils.ui.ContactAdapter;
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.on
 
         sharedPreference = new SharedPreference();
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!hasPhoneContactsPermission(Manifest.permission.READ_CONTACTS))
                 requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CODE);
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.on
 
         }
 
-
+        checkCallLogPermission();
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -59,22 +58,11 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.on
             }
         }
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CALL_LOG)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CALL_LOG)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CALL_LOG},
-                        MY_PERMISSIONS_REQUEST_READ_CALL_LOG);
-            }
-        }
-
-
         initRecyclerView();
 
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -91,11 +79,11 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.on
 
                 }
             }
-                case MY_PERMISSIONS_REQUEST_READ_CALL_LOG: {
-                    if (grantResults.length > 0
-                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            case MY_PERMISSIONS_REQUEST_READ_CALL_LOG: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    }
+                }
 
 
                 return;
@@ -115,9 +103,9 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.on
     @Override
     public void onCheckClicked(Contact contact, int pos, boolean checkStatus) {
         Log.d("ContactDetails", String.valueOf(contact));
-        if(checkStatus){
+        if (checkStatus) {
             sharedPreference.addContact(getApplicationContext(), contact);
-        }else{
+        } else {
             sharedPreference.removeContact(getApplicationContext(), contact);
         }
 
@@ -129,5 +117,19 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.on
         adapter.setContacts(contactViewModel.getContacts());
         adapter.setOnItemClickListener(this);
         binding.contactRecycleView.setAdapter(adapter);
+    }
+
+    public void checkCallLogPermission() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CALL_LOG)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CALL_LOG)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CALL_LOG},
+                        MY_PERMISSIONS_REQUEST_READ_CALL_LOG);
+            }
+        }
     }
 }
