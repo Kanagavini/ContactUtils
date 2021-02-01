@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ContactUtils</string>
+    <string name="LoadingMessage">"Loading....Please wait!"</string>
+
+</resources>
