@@ -26,7 +26,6 @@
         android:text="@{contact.contactName}"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
-
         tools:text="ContactName" />
 
     <TextView
@@ -34,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
         tools:text="9876543210" />
 
 
