@@ -19,7 +19,6 @@ public class PhoneListener extends PhoneStateListener {
             return;
         }
 
-        Log.d("dataLog123"  , phoneNumber );
         switch(state){
             case TelephonyManager.CALL_STATE_RINGING:
                 isIncoming = true;
