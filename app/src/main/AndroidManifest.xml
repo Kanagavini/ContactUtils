@@ -49,7 +49,7 @@
 
         <activity
             android:name=".ui.CustomDialog"
-            android:theme="@android:style/Theme.Dialog"
+            android:theme="@android:style/Theme.Material.Light.Dialog"
             android:noHistory="true" />
 
     </application>

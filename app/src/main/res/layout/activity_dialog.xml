@@ -23,6 +23,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
         android:text="@{contact.contactName}"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
