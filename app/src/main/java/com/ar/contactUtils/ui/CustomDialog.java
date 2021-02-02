@@ -44,7 +44,7 @@ public class CustomDialog extends Activity {
             WindowManager.LayoutParams params = getWindow().getAttributes();
             params.x = -100;
             params.height = 300;
-            params.width = 1000;
+            params.width = 1100;
             params.y = -50;
 
             this.getWindow().setAttributes(params);

@@ -1,6 +1,7 @@
 package com.ar.contactUtils.receiver;
 
 import android.app.Dialog;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,6 +34,8 @@ public class PhoneReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
+       context.sendBroadcast(new Intent(context.getApplicationContext(), BroadcastService.class));
+
         //Log.w("intent " , intent.getAction().toString());
         TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         PhoneListener customPhoneListener = new PhoneListener();
@@ -45,8 +48,6 @@ public class PhoneReceiver extends BroadcastReceiver {
             @Override
             public void onCallStateChanged(int state, String incomingNumber) {
                 super.onCallStateChanged(state, incomingNumber);
-
-
 
                if (checkItem(incomingNumber)) {
                     //start activity which has dialog

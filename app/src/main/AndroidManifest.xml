@@ -52,6 +52,9 @@
             android:theme="@android:style/Theme.Material.Light.Dialog"
             android:noHistory="true" />
 
+        <service android:name=".receiver.BroadcastService"
+            android:exported="true"
+            android:stopWithTask="false"></service>
     </application>
 
 </manifest>
